@@ -1,0 +1,32 @@
+<div *ngIf="selectedStyle">
+  <h3 class="text-center">Search For A Beer</h3>
+  <spinner-component [spinnerShow]="loading"></spinner-component>
+  <div class="input-group">
+    <input type="text" class="form-control" [(ngModel)]="beerSearch" placeholder="Search...">
+    <span class="input-group-btn">
+        <button class="btn btn-primary" type="button" (click)="onSearch()">Search</button>
+      </span>
+  </div>
+  <small class="form-text text-muted">Name must be exact.</small>
+  <br/>
+  <div *ngIf="!loading">
+    <span class="btn-group d-flex justify-content-center">
+      <button type="button" class="btn btn-outline-primary" [disabled]="currentPage === 1" (click)="onPrev()"><i class="fa fa-angle-double-left"></i> Prev</button>
+      <button type="button" class="btn btn-outline-primary" [disabled]="!hasMoreData" (click)="onNext()">Next <i class="fa fa-angle-double-right"></i></button>
+    </span>
+    <br/>
+    <div style="max-height: 615px; overflow-y: scroll">
+      <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start"
+           (click)="selectBeer(beer)" [ngClass]="{'active': selectedBeer === beer}"
+           *ngFor="let beer of beerList">
+          <div class="d-flex w-100 justify-content-between" *ngIf="selectedBeer === beer">
+            <h5 class="mb-1">{{beer.nameDisplay}}</h5>
+          </div>
+          <small class="mb-1" *ngIf="selectedBeer === beer">{{beer.description}}</small>
+          <div *ngIf="selectedBeer !== beer">{{beer.nameDisplay}}</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div>
+  <h3 class="text-center">Select A Beer Style</h3>
+  <spinner-component [spinnerShow]="loading"></spinner-component>
+  <div class="input-group">
+    <input type="text" class="form-control" [(ngModel)]="searchFilter.name" placeholder="Filter...">
+  </div>
+  <br/>
+  <div style="max-height: 700px; overflow-y: scroll">
+    <div class="list-group" *ngIf="styleList">
+      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start"
+         (click)="selectStyle(style)" [ngClass]="{'active':selectedStyle === style}"
+         *ngFor="let style of styleList | filterBy: searchFilter">
+        <div class="d-flex w-100 justify-content-between" *ngIf="selectedStyle === style">
+          <h5 class="mb-1"> {{style.name}}</h5>
+        </div>
+        <small class="mb-1" *ngIf="selectedStyle === style">{{style.description}}</small>
+        <div *ngIf="selectedStyle !== style">{{style.name}}</div>
+      </a>
+    </div>
+  </div>
+</div>
